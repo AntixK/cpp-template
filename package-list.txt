@@ -1,0 +1,5 @@
+intel-mkl
+libopenblas-dev
+libpcl-dev
+libsuperlu-dev
+python3-opencv

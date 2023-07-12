@@ -1,0 +1,24 @@
+---
+Language:     Cpp
+AlignAfterOpenBracket: Align
+BasedOnStyle: Google
+ColumnLimit:  100
+CommentPragmas: '^ IWYU pragma:'
+CompactNamespaces: false
+IndentWidth: 4
+SortIncludes: CaseInsensitive
+Standard: c++14
+TabWidth: 7
+UseTab: Never
+---
+Language:     Cpp
+AlignAfterOpenBracket: Align
+BasedOnStyle: Google
+ColumnLimit:  100
+CommentPragmas: '^ IWYU pragma:'
+CompactNamespaces: false
+IndentWidth: 4
+SortIncludes: CaseInsensitive
+Standard: c++14
+TabWidth: 7
+UseTab: Never
