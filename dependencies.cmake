@@ -111,6 +111,10 @@ CPMAddPackage(
     VERSION 3.6.0
     GIT_TAG "v3.6.0"
     GITHUB_REPOSITORY "taskflow/taskflow"
+    GIT_SHALLOW TRUE
+    OPTIONS
+    "TF_BUILD_EXAMPLES OFF"
+    "TF_BUILD_TESTS OFF"
 )
 
 if(taskflow_ADDED)
@@ -129,6 +133,13 @@ CPMAddPackage(
     VERSION 19.24.2
     GIT_TAG "v19.24.2"
     GIT_REPOSITORY "https://github.com/davisking/dlib.git"
+    GIT_SHALLOW TRUE
+    OPTIONS
+    "DLIB_ISO_CPP_ONLY_STR TRUE"
+    "DLIB_NO_GUI_SUPPORT_STR TRUE"
+    "DLIB_USE_LAPACK_STR TRUE"
+    "DLIB_USE_BLAS_STR TRUE"
+    "DLIB_USE_CUDA_STR FALSE"
 )
 
 if(dlib_ADDED)
@@ -138,6 +149,127 @@ else()
     message(FATAL_ERROR "dlib was not installed.")
 endif()
 # ----------------------------------------------------------------- #
+
+# --------------------------- ensmallen --------------------------- #
+CPMAddPackage(
+    NAME ensmallen
+    VERSION 1.16.2
+    DOWNLOAD_ONLY YES
+    GIT_TAG ensmallen-1.16.2
+    GITHUB_REPOSITORY "mlpack/ensmallen"
+    GIT_SHALLOW TRUE
+    OPTIONS
+    "DOWNLOAD_DEPENDENCIES=OFF"
+)
+
+if(ensmallen_ADDED)
+    message(STATUS "Added ensmallen @ ${ensmallen_SOURCE_DIR}")
+    add_library(ensmallen INTERFACE IMPORTED)
+    target_include_directories(ensmallen INTERFACE "${ensmallen_SOURCE_DIR}/include")
+    list(APPEND DEP_LIBS ensmallen)
+else()
+    message(FATAL_ERROR "ensmallen was not installed.")
+endif()
+# ----------------------------------------------------------------- #
+
+# ---------------------------- cereal ----------------------------- #
+CPMAddPackage(
+    NAME cereal
+    VERSION 1.3.2
+    DOWNLOAD_ONLY YES
+    GIT_TAG v1.3.2
+    GITHUB_REPOSITORY "USCiLab/cereal"
+    GIT_SHALLOW TRUE
+)
+
+if(cereal_ADDED)
+    message(STATUS "Added cereal @ ${cereal_SOURCE_DIR}")
+    add_library(cereal INTERFACE IMPORTED)
+    target_include_directories(cereal INTERFACE "${cereal_SOURCE_DIR}/include")
+    list(APPEND DEP_LIBS cereal)
+else()
+    message(FATAL_ERROR "cereal was not installed.")
+endif()
+# ----------------------------------------------------------------- #
+
+# # ------------- mlpack (Requires armadillo & cereal) -------------- #
+# CPMAddPackage(
+#     NAME mlpack
+#     VERSION 3.1.1
+#     DOWNLOAD_ONLY YES
+#     URL "https://github.com/mlpack/mlpack/archive/refs/tags/4.2.0.tar.gz"
+#     OPTIONS
+#     "BUILD_PYTHON_BINDINGS=OFF"
+#     "BUILD_TESTS=OFF"
+# )
+
+# if(mlpack_ADDED)
+#     message(STATUS "Added mlpack @ ${mlpack_SOURCE_DIR}")
+#     add_library(mlpack INTERFACE IMPORTED)
+#     target_include_directories(mlpack INTERFACE "${mlpack_SOURCE_DIR}/src/")
+#     list(APPEND DEP_LIBS mlpack)
+# else()
+#     message(FATAL_ERROR "mlpack was not installed.")
+# endif()
+# # ----------------------------------------------------------------- #
+
+# ---------------------------- spdlog ----------------------------- #
+CPMAddPackage(
+    NAME spdlog
+    VERSION 1.12.0
+    DOWNLOAD_ONLY YES
+    GIT_TAG v1.12.0
+    GITHUB_REPOSITORY "gabime/spdlog"
+    GIT_SHALLOW TRUE
+)
+
+if(spdlog_ADDED)
+    message(STATUS "Added spdlog @ ${spdlog_SOURCE_DIR}")
+    add_library(spdlog INTERFACE IMPORTED)
+    target_include_directories(spdlog INTERFACE "${spdlog_SOURCE_DIR}/include")
+    list(APPEND DEP_LIBS spdlog)
+else()
+    message(FATAL_ERROR "spdlog was not installed.")
+endif()
+# ----------------------------------------------------------------- #
+
+# ---------------------------- fmtlib ----------------------------- #
+
+CPMAddPackage("gh:fmtlib/fmt#10.0.0")
+
+
+if(fmt_ADDED)
+    message(STATUS "Added fmt @ ${fmt_SOURCE_DIR}")
+    list(APPEND DEP_LIBS fmt)
+else()
+    message(FATAL_ERROR "fmt was not installed.")
+endif()
+# ----------------------------------------------------------------- #
+
+# # ------------------- fmtlog (REQUIRES fmtlib) -------------------- #
+# NOT WORKING
+# CPMAddPackage(
+#     NAME fmtlog
+#     VERSION 2.2.1
+#     DOWNLOAD_ONLY YES
+#     GIT_TAG v2.2.1
+#     GITHUB_REPOSITORY "MengRao/fmtlog"
+#     # GIT_SUBMODULES FALSE
+#     GIT_SHALLOW TRUE
+#     OPTIONS
+#     "FMTLOG_HEADER_ONLY YES"
+# )
+
+# if(fmtlog_ADDED)
+#     message(STATUS "Added fmtlog @ ${fmtlog_SOURCE_DIR}")
+#     add_library(fmtlog INTERFACE IMPORTED)
+#     target_include_directories(fmtlog INTERFACE "${fmtlog_SOURCE_DIR}")
+#     list(APPEND DEP_LIBS fmtlog)
+# else()
+#     message(FATAL_ERROR "fmtlog was not installed.")
+# endif()
+# # ----------------------------------------------------------------- #
+
 
 # # ---------------------------- Pybind11 --------------------------- #
 # CPMAddPackage(

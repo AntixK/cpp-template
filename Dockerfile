@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN echo "Updating Ubuntu"
 RUN apt-get update && apt-get upgrade -y
 
@@ -26,9 +28,14 @@ RUN apt install -y \
     tmux \
     unzip \
     vim \
-    wget \
+    wget 
+
+RUN echo "Installing additional packages from package-list.txt"
+COPY package-list.txt /tmp/package-list.txt
+RUN xargs apt-get install -y < /tmp/package-list.txt \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
+# RUN apt-get update && apt-get --ignore-missing install -y $(cat /tmp/package-list.txt)
 
 RUN echo "Installing CMake, Catch2 & Valgrind"
 
@@ -50,11 +57,6 @@ RUN wget https://sourceware.org/pub/valgrind/valgrind-3.21.0.tar.bz2 && \
     ./configure && \
     make -j3 && \
     make install
-
-RUN echo "Installing additional packages from package-list.txt"
-COPY package-list.txt /tmp/package-list.txt
-# RUN apt-get update && xargs apt-get install < /tmp/package-list.txt
-# RUN apt-get update && apt-get --ignore-missing install -y $(cat /tmp/package-list.txt)
 
 RUN ln -sv /usr/bin/python3 /usr/bin/python
 

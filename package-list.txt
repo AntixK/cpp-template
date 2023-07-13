@@ -3,3 +3,4 @@ libopenblas-dev
 libpcl-dev
 libsuperlu-dev
 python3-opencv
+libcgal-dev
